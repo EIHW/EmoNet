@@ -1,6 +1,9 @@
 # EmoNet
 
-This repository contains the code for the EmoNet framework for multi-domain learning networks for audio tasks.
+
+**EmoNet** is a Python toolkit for multi-corpus speech emotion recognition and other audio classification tasks.
+
+**(c) 2021 Maurice Gerczuk, Shahin Amiriparian, Björn Schuller: Universität Augsburg**
 
 ## Installation
 

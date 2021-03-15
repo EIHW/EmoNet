@@ -5,6 +5,7 @@
 
 **(c) 2021 Maurice Gerczuk, Shahin Amiriparian, Björn Schuller: Universität Augsburg**
 
+Please direct any questions or requests to Maurice Gerczuk (maurice.gerczuk at uni-a.de) or Shahin Amiriparian (shahin.amiriparian at uni-a.de).
 ## Installation
 
 All dependencies can be installed via pip from the requirements.txt:

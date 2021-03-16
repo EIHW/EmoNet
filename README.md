@@ -6,6 +6,24 @@
 **(c) 2021 Maurice Gerczuk, Shahin Amiriparian, Björn Schuller: Universität Augsburg**
 
 Please direct any questions or requests to Maurice Gerczuk (maurice.gerczuk at uni-a.de) or Shahin Amiriparian (shahin.amiriparian at uni-a.de).
+
+# Citing
+If you use EmoNet or any code from EmoNet in your research work, you are kindly asked to acknowledge the use of EmoNet in your publications.
+> M. Gerczuk, S. Amiriparian, S. Ottl, and B. Schuller, “EmoNet: A transfer learning framework for multi-corpus speech emotionrecognition,” 2021. [https://arxiv.org/abs/2103.08310](https://arxiv.org/abs/2103.08310)
+
+
+```
+@misc{gerczuk2021emonet,
+      title={EmoNet: A Transfer Learning Framework for Multi-Corpus Speech Emotion Recognition}, 
+      author={Maurice Gerczuk and Shahin Amiriparian and Sandra Ottl and Björn Schuller},
+      year={2021},
+      eprint={2103.08310},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD}
+}
+```
+
+
 ## Installation
 
 All dependencies can be installed via pip from the requirements.txt:

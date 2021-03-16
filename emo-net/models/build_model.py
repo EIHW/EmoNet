@@ -43,14 +43,6 @@ def global_avgpool(x):
     return x
 
 
-def attention_2d(x, name='', mask=None):
-    x = tf.keras.layers.Reshape(target_shape=(-1, K.int_shape(x)[-1]))(x)
-    #x = Masking(mask_value=0.)(x)
-    x = SeqWeightedAttention(
-        name=f'{name}_seq_weighted_attention')(x)
-    return x
-
-
 def infer_tasks_from_weightfile(initial_weights):
     with h5py.File(initial_weights) as f:
         base_tasks = []

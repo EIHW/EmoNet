@@ -1,3 +1,21 @@
+#                    EmoNet
+# ==============================================================================
+# Copyright (C) 2021 Maurice Gerczuk, Shahin Amiriparian,
+# Sandra Ottl, Björn Schuller: University of Augsburg. All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ==============================================================================
 import os
 #os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
@@ -848,9 +866,9 @@ def single_task(data_path,
 @click.option(
     '-c',
     '--classifier',
-    type=click.Choice(['avgpool', 'FCNAttention', 'attention', 'attention2d', 'rnn']),
+    type=click.Choice(['avgpool', 'FCNAttention', 'rnn']),
     help=
-    'The classification top of the network architeture. Choose between simple pooling + dense layer (needs fixes window size) and fully convolutional attention.',
+    'The classification top of the network architeture. Choose between simple pooling + dense layer (needs fixed window size) and fully convolutional attention.',
     default='avgpool')
 @click.option('-w',
               '--window',
@@ -1014,7 +1032,7 @@ def evaluate_cnn(data_path,
 @click.option(
     '-c',
     '--classifier',
-    type=click.Choice(['avgpool', 'attention2d', 'FCNAttention', 'rnn']),
+    type=click.Choice(['avgpool', 'FCNAttention', 'rnn']),
     help=
     'The classification top of the network architeture. Choose between simple pooling + dense layer (needs fixes window size) and fully convolutional attention.',
     default='avgpool')
@@ -1195,7 +1213,7 @@ def multi_task(data_path,
 @click.option(
     '-c',
     '--classifier',
-    type=click.Choice(['avgpool', 'FCNAttention', 'attention', 'attention2d', 'rnn']),
+    type=click.Choice(['avgpool', 'FCNAttention', 'rnn']),
     help=
     'The classification top of the network architeture. Choose between simple pooling + dense layer (needs fixes window size) and fully convolutional attention.',
     default='avgpool')
@@ -1363,7 +1381,7 @@ def single_task_vgg(data_path,
 @click.option(
     '-c',
     '--classifier',
-    type=click.Choice(['avgpool', 'attention2d', 'rnn']),
+    type=click.Choice(['avgpool', 'FCNAttention', 'rnn']),
     help=
     'The classification top of the network architeture. Choose between simple pooling + dense layer (needs fixes window size) and fully convolutional attention.',
     default='avgpool')

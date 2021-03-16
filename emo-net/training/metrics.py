@@ -1,3 +1,21 @@
+#                    EmoNet
+# ==============================================================================
+# Copyright (C) 2021 Maurice Gerczuk, Shahin Amiriparian,
+# Sandra Ottl, Björn Schuller: University of Augsburg. All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ==============================================================================
 def warn(*args, **kwargs):
     pass
 import warnings
@@ -372,12 +390,6 @@ class Accuracy(ClassificationMetric):
                 multi_label: bool,
                 binary: bool,
                 binary_cutoffs: List[float] = None) -> ClassificationMetric:
-        # y_true, y_pred = ClassificationMetric._transform_arrays(
-        #     y_true=y_true,
-        #     y_pred=y_pred,
-        #     multi_label=multi_label,
-        #     binary=binary,
-        #     binary_cutoffs=binary_cutoffs)
         score = accuracy_score(y_true=y_true, y_pred=y_pred)
         return cls(value=score, multi_label=multi_label, binary=binary)
 
@@ -400,12 +412,6 @@ class MacroF1(ClassificationMetric):
                 multi_label: bool,
                 binary: bool,
                 binary_cutoffs: List[float] = None) -> ClassificationMetric:
-        # y_true, y_pred = ClassificationMetric._transform_arrays(
-        #     y_true=y_true,
-        #     y_pred=y_pred,
-        #     multi_label=multi_label,
-        #     binary=binary,
-        #     binary_cutoffs=binary_cutoffs)
         score = f1_score(y_true=y_true,
                          y_pred=y_pred,
                          labels=labels,
@@ -442,12 +448,6 @@ class MacroPrecision(ClassificationMetric):
                 multi_label: bool,
                 binary: bool,
                 binary_cutoffs: List[float] = None) -> ClassificationMetric:
-        # y_true, y_pred = ClassificationMetric._transform_arrays(
-        #     y_true=y_true,
-        #     y_pred=y_pred,
-        #     multi_label=multi_label,
-        #     binary=binary,
-        #     binary_cutoffs=binary_cutoffs)
         score = precision_score(y_true=y_true,
                                 y_pred=y_pred,
                                 labels=labels,
@@ -616,19 +616,6 @@ CLASSIFICATION_METRICS = all_subclasses(ClassificationMetric)
 REGRESSION_METRICS = all_subclasses(RegressionMetric)
 ALL_METRICS = all_subclasses(Metric)
 
-# scorers for use in scikit-learn classifiers
-# SCIKIT_CLASSIFICATION_SCORERS = {
-#     MicroRecall.__name__: MicroRecall.scikit_scorer
-#     UAR.__name__: UAR.scikit_scorer,
-#     Accuracy.__name__: Accuracy.scikit_scorer,
-#     MicroF1.__name__: MicroF1.scikit_scorer,
-#     MacroF1.__name__: MacroF1.scikit_scorer,
-#     MicroPrecision.__name__: MicroPrecision.scikit_scorer,
-#     MacroPrecision.__name__: MacroPrecision.scikit_scorer,
-#     ROC_AUC.__name__: ROC_AUC.scikit_scorer,
-#     PR_AUC.__name__: PR_AUC.scikit_scorer
-
-# }
 SCIKIT_CLASSIFICATION_SCORERS = {
     M.__name__: M.scikit_scorer
     for M in CLASSIFICATION_METRICS if M != ROC_AUC and M != PR_AUC
@@ -639,28 +626,10 @@ SCIKIT_CLASSIFICATION_SCORERS_EXTENDED = {
     for M in CLASSIFICATION_METRICS
 }
 
-# scorers for use in scikit-learn regressors
-# SCIKIT_REGRESSION_SCORERS = {
-#     MSE.__name__: MSE.scikit_scorer,
-#     RMSE.__name__: RMSE.scikit_scorer,
-#     PCC.__name__: PCC.scikit_scorer,
-#     CCC.__name__: CCC.scikit_scorer
-# }
-
 SCIKIT_REGRESSION_SCORERS = {
     M.__name__: M.scikit_scorer
     for M in REGRESSION_METRICS
 }
-
-# KERAS_METRIC_QUANTITIES = {
-#     F1: 'val_fmeasure_acc',
-#     Accuracy: 'val_acc',
-#     UAR: 'val_uar',
-#     MSE: 'val_mean_squared_error',
-#     Precision: 'val_precision',
-#     ROC_AUC: 'val_roc_auc',
-#     PR_AUC: 'val_pr_auc'
-# }
 
 KERAS_METRIC_QUANTITIES = {
     M: f'val_{"_".join(M.key.lower().split(" "))}'
@@ -671,11 +640,5 @@ KERAS_METRIC_MODES = {
     M: 'max' if M.greater_is_better else 'min'
     for M in ALL_METRICS
 }
-
-# CLASSIFICATION_METRICS = [
-#     MicroRecall, UAR, Accuracy, MicroF1, MacroF1, MicroPrecision,
-#     MacroPrecision, ROC_AUC, PR_AUC
-# ]
-# REGRESSION_METRICS = [MSE, RMSE, PCC, CCC]
 
 KEY_TO_METRIC = {metric.__name__: metric for metric in ALL_METRICS}

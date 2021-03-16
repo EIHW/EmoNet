@@ -1,3 +1,21 @@
+#                    EmoNet
+# ==============================================================================
+# Copyright (C) 2021 Maurice Gerczuk, Shahin Amiriparian,
+# Sandra Ottl, Björn Schuller: University of Augsburg. All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ==============================================================================
 import numpy as np
 import time
 import pandas as pd
@@ -263,30 +281,3 @@ def benchmark_generator(generator, num_epochs=2):
             # Performing a training step
             #time.sleep(0.01)
     tf.print("Execution time:", time.perf_counter() - start_time)
-
-if __name__=='__main__':
-    tasks = ["EU-EmoVoice"]
-    train_generators = [
-        AudioDataGenerator(f'/mnt/student/MauriceGerczuk/EmoSet/multiTaskSetup-wavs-with-test/{task}/test.clean.csv',
-                           "/mnt/nas/data_work/shahin/EmoSet/wavs-reordered",
-                           batch_size=64,
-                           window=10,
-                           shuffle=False,
-                           sr=16000,
-                           time_stretch=None,
-                           pitch_shift=None,
-                           variable_duration=True,
-                           save_dir=None,
-                           val_split=None,
-                           subset='train') for task in tasks
-    ]
-    datasets = tuple(gen.tf_dataset() for gen in train_generators)
-    d = datasets[0]
-    # for i, x in enumerate(d):
-    #     print(x[0].numpy().shape)
-    #     assert tf.math.count_nonzero(x[0]) > 0, f'all zero at {i} with label {x[1]} and filename {train_generators[0].files[i]}'
-    #     pass
-    benchmark(datasets[0])
-    #benchmark(tf.data.Dataset.zip(datasets).prefetch(tf.data.experimental.AUTOTUNE).cache(), num_epochs=10)
-
-

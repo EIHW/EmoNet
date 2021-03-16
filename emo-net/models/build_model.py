@@ -1,3 +1,21 @@
+#                    EmoNet
+# ==============================================================================
+# Copyright (C) 2021 Maurice Gerczuk, Shahin Amiriparian,
+# Sandra Ottl, Björn Schuller: University of Augsburg. All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ==============================================================================
 import tensorflow as tf
 tf.random.set_seed(42)
 
@@ -381,22 +399,14 @@ def create_multi_task_resnets(input_dim,
             name = task
         if classifier == 'avgpool':
             y = avgpool(y)
-        if classifier == 'attention2d':
-            if attention2d is None:
-                attention2d = Attention2D(name='core_seq_weighted_attention', trainable=learnall_classifier)
-            if not share_feature_layer and mode == 'adapters':
-                attention2d = Attention2D(name=f'{task}_seq_weighted_attention', trainable=True)
-            
-            y = attention2d(y, mask=pooled_mask)
-            
-        if classifier == 'FCNAttention':
+        elif classifier == 'FCNAttention':
             if attention2d is None:
                 attention2d = Attention2Dtanh(lmbda=0.3, mlp_units=K.int_shape(y)[-1], name=f'core_2d_attention', trainable=learnall_classifier)
             if not share_feature_layer and mode == 'adapters':
                 attention2d = Attention2Dtanh(name=f'{task}_2d_attention', mlp_units=K.int_shape(y)[-1], trainable=True)
             y = attention2d(y)
 
-        if classifier == 'rnn':
+        elif classifier == 'rnn':
             if adapter_rnn is None:
                 adapter_rnn = RNNWithAdapters(K.int_shape(y),
                                               hidden_size=K.int_shape(y)[-1],
@@ -430,16 +440,10 @@ def create_multi_task_resnets(input_dim,
         
             if classifier == 'avgpool':
                 y = avgpool(y)
-            if classifier == 'attention2d':
-                if attention2d is None:
-                    attention2d = Attention2D(name='core_seq_weighted_attention', trainable=learnall_classifier)
-                if not share_feature_layer and mode == 'adapters':
-                    attention2d = Attention2D(name=f'{task}_seq_weighted_attention', trainable=True)
-                y = attention2d(y, mask=pooled_mask)
-            if classifier == 'rnn':
+            elif classifier == 'rnn':
                 adapter_rnn._add_new_task(task)
                 y = adapter_rnn(y, task)
-            if classifier == 'FCNAttention':
+            elif classifier == 'FCNAttention':
                 if attention2d is None:
                     attention2d = Attention2Dtanh(lmbda=0.3, mlp_units=K.int_shape(y)[-1], name=f'core_2d_attention', trainable=learnall_classifier)
                 if not share_feature_layer and mode == 'adapters':
@@ -537,13 +541,8 @@ def create_multi_task_vgg16(input_dim,
             name = task
         if classifier == 'avgpool':
             y = global_avgpool(y)
-        if classifier == 'attention2d':
-            if attention2d is None:
-                attention2d = Attention2D(name='core_seq_weighted_attention', trainable=True)
-            if not share_feature_layer:
-                attention2d = Attention2D(name=f'{task}_seq_weighted_attention', trainable=True)
-            
-            y = attention2d(y, mask=pooled_mask)
+
+
         if classifier == 'FCNAttention':
             if attention2d is None:
                 attention2d = Attention2Dtanh(lmbda=0.3, mlp_units=K.int_shape(y)[-1], name=f'core_2d_attention', trainable=True)

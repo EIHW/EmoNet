@@ -113,21 +113,21 @@ def cli(verbose):
 def cnn():
     pass
 
-@cli.group()
-def rnn():
-    pass
+# @cli.group()
+# def rnn():
+#     pass
 
 @cli.group()
 def vgg16():
     pass
 
-@cli.group()
-def fusion():
-    pass
+# @cli.group()
+# def fusion():
+#     pass
 
 
 
-@fusion.command(name='multi-task')
+# @fusion.command(name='multi-task')
 @click.option('-dp',
               '--data-path',
               required=True,
@@ -335,7 +335,7 @@ def fusion_multi_task(data_path,
     input_bn=input_bn,
     share_feature_layer=share_feature_layer)
     
-@fusion.command(name='single-task')
+# @fusion.command(name='single-task')
 @click.option('-dp',
               '--data-path',
               required=True,
@@ -1445,7 +1445,7 @@ def multi_task_vgg(data_path,
     share_feature_layer=share_feature_layer)
 
     
-@rnn.command(name='single-task')
+# @rnn.command(name='single-task')
 @click.option('-dp',
               '--data-path',
               required=True,
@@ -1681,7 +1681,7 @@ def rnn_single_task(data_path,
                      input_projection=input_projection)
     
     
-@rnn.command(name='multi-task')
+# @rnn.command(name='multi-task')
 @click.option('-dp',
               '--data-path',
               required=True,

@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ==============================================================================
 import tensorflow as tf
-from .attention import SeqSelfAttention, SeqWeightedAttention
+#from .attention import SeqSelfAttention, SeqWeightedAttention
 
 kernel_regularizer = tf.keras.regularizers.l2(1e-6)
 rnn_regularizer = tf.keras.regularizers.L1L2(1e-6)

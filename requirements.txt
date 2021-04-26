@@ -5,6 +5,7 @@ librosa
 numpy
 pandas
 Pillow
+numba==0.48.*
 scikit-learn==0.22
 tensorflow==2.2.*
 tqdm

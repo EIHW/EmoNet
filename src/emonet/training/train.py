@@ -81,7 +81,7 @@ def __vgg16_params(freeze_up_to, classifier, dropout):
 
 
 def train_single_task(
-    initial_weights='/mnt/student/MauriceGerczuk/EmoSet/experiments/residual-adapters-emonet-revised/parallel/128mels/2s/scratch/N-2_factor-1-balancedClassWeights-True/GEMEP/weights_GEMEP.h5',
+    initial_weights='./weights.h5',
     feature_extractor='cnn',
     batch_size=64,
     epochs=50,
@@ -90,11 +90,11 @@ def train_single_task(
     num_mels=128,
     task='IEMOCAP-4cl',
     loss='categorical_cross_entropy',
-    directory='/mnt/nas/data_work/shahin/EmoSet/wavs-reordered/',
+    directory='./EmoSet/wavs/',
     train_csv='train.csv',
     val_csv='val.csv',
     test_csv='test.csv',
-    experiment_base_path='/mnt/student/MauriceGerczuk/EmoSet/experiments/residual-adapters-emonet-revised',
+    experiment_base_path='./experiments/residual-adapters-emonet',
     random_noise=None,
     learnall=False,
     last_layer_only=False,
@@ -299,9 +299,9 @@ def train_multi_task(
         "SUSAS", "TurkishEmoBUEE"
     ],
     loss='crossentropy',
-    directory='/mnt/nas/data_work/shahin/EmoSet/wavs-reordered/',
-    experiment_base_path='/mnt/student/MauriceGerczuk/EmoSet/experiments/residual-adapters-emonet-revised',
-    multi_task_setup='/mnt/student/MauriceGerczuk/EmoSet/multiTaskSetup-wavs-with-test/',
+    directory='./EmoSet/wavs-reordered/',
+    experiment_base_path='./experiments/residual-adapters-emonet',
+    multi_task_setup='./EmoSet/multiTaskSetup/',
     steps_per_epoch=20,
     optimizer=tf.keras.optimizers.SGD,
     random_noise=None,

@@ -30,7 +30,7 @@ from sklearn.preprocessing import StandardScaler
 
 def compute_scaling(dataset_base):
     train_generator = AudioDataGenerator(join(dataset_base, 'train.csv'),
-                                         '/mnt/nas/data_work/shahin/EmoSet/wavs-reordered/',
+                                         './EmoSet/wavs/',
                                          batch_size=1,
                                          window=None,
                                          shuffle=False,
@@ -42,7 +42,7 @@ def compute_scaling(dataset_base):
                                          subset='train',
                                          variable_duration=True)
     train_dataset = train_generator.tf_dataset().prefetch(tf.data.experimental.AUTOTUNE)
-    
+
     input_tensor = tf.keras.layers.Input(shape=(None,))
     input_reshaped = tf.keras.layers.Reshape(
             target_shape=(-1, ))(input_tensor)
@@ -59,7 +59,7 @@ def compute_scaling(dataset_base):
     model = tf.keras.Model(inputs=input_tensor, outputs=x)
     spectrograms = []
     for batch in tqdm(train_dataset):
-        spectrograms.append(np.squeeze(model.predict_on_batch(batch)))   
+        spectrograms.append(np.squeeze(model.predict_on_batch(batch)))
     spectrograms_concat = np.concatenate(spectrograms)
     mean = np.mean(spectrograms_concat)
     std = np.std(spectrograms_concat)
@@ -67,9 +67,9 @@ def compute_scaling(dataset_base):
     print(dataset_base, mean, std)
     with open(join(dataset_base, 'mean_std.pkl'), 'wb') as f:
         pickle.dump(mean_std, f)
-        
-        
+
+
 if __name__=='__main__':
-    datasets = glob.glob('/mnt/student/MauriceGerczuk/EmoSet/multiTaskSetup-wavs-with-test/*/')
+    datasets = glob.glob('./EmoSet/multiTaskSetup/*/')
     for dataset in datasets:
         compute_scaling(dataset)

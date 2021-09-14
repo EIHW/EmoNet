@@ -70,7 +70,7 @@ class AudioDataGenerator(Sequence):
                 logger.info(f'Setup csv "{csv_file}" contains "label" column at index {label_index}.')
 
             else:
-                label_index = len(header) - 1 
+                label_index = len(header) - 1
                 logger.warn(f'Setup csv "{csv_file}" does not contain "label" column. Choosing last column: "{header[label_index]}" instead.')
             if 'file' in header:
                 path_index = header.index('file')
@@ -83,14 +83,14 @@ class AudioDataGenerator(Sequence):
                 self.files.append(
                     join(directory, line[path_index]))
                 self.classes.append(line[label_index])
-        
+
         logger.info(f'Parsed {len(self.files)} audio files')
         self.val_split = val_split
         self.train_indices = None
         self.val_indices = val_indices
         self.subset = subset
 
-        
+
 
         self.label_binarizer = LabelEncoder()
         self.label_binarizer.fit(self.classes)
@@ -99,7 +99,7 @@ class AudioDataGenerator(Sequence):
             self.__create_split()
         elif not (self.val_indices is None):
             self.__apply_split()
-        
+
         self.directory = directory
         self.window = window
         self.classes = self.label_binarizer.transform(self.classes)
@@ -117,30 +117,30 @@ class AudioDataGenerator(Sequence):
         self.sr = sr
         np.random.seed(self.random_state)
         self.on_epoch_end()
-        
 
-    @staticmethod  
+
+    @staticmethod
     def load_audio(filename, label):
         raw = tf.io.read_file(filename)
         audio, sr = tf.audio.decode_wav(raw, desired_channels=1)
         audio = tf.reshape(audio, (-1,))
         return audio, label
-    
-    
+
+
     @staticmethod
     def random_slice(audio, label, size):
         size = tf.math.minimum(tf.shape(audio), size)
         audio = tf.image.random_crop(audio, size, seed=42)
         return audio, label
-    
+
     @staticmethod
     def center_slice(audio, label, size):
         duration = tf.shape(audio)[0]
         start = duration // 2 if duration // 2 > size else 0
         audio = audio[start:start+size]
         return audio, label
-    
-    
+
+
     def tf_dataset(self):
         dataset = tf.data.Dataset.from_tensor_slices((self.files, self.categorical_classes))
         binary = len(self.categorical_classes.shape) < 2
@@ -161,10 +161,10 @@ class AudioDataGenerator(Sequence):
         dataset = dataset.padded_batch(self.batch_size, ((padded_size,), padded_label_size))
         #dataset = dataset.prefetch(tf.data.experimental.AUTOTUNE).cache()
         return dataset
-        
-    
-        
-        
+
+
+
+
 
 
     def __create_split(self):
@@ -263,7 +263,7 @@ class AudioDataGenerator(Sequence):
                                       1 + self.pitch_shift)
             y = librosa.effects.pitch_shift(y, sr, steps)
         return y
-    
+
 
 def benchmark(dataset, num_epochs=2):
     start_time = time.perf_counter()
@@ -275,9 +275,9 @@ def benchmark(dataset, num_epochs=2):
 
 def benchmark_generator(generator, num_epochs=2):
     start_time = time.perf_counter()
-    for epoch_num in range(num_epochs):
+    for _ in range(num_epochs):
         for i in range(len(generator)):
-            sample = generator[i]
+            _ = generator[i]
             # Performing a training step
-            #time.sleep(0.01)
+            # time.sleep(0.01)
     tf.print("Execution time:", time.perf_counter() - start_time)

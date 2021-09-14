@@ -1090,6 +1090,7 @@ def multi_task(data_path,
     train_multi_task(
     batch_size=batch_size,
     epochs=epochs,
+    initial_learning_rate=learning_rate,
     balanced_weights=balanced_weights,
     window=window,
     num_mels=num_mels,

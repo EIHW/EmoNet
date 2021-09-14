@@ -7,5 +7,6 @@ pandas
 Pillow
 numba==0.48.*
 scikit-learn==0.22
-tensorflow==2.2.*
+tensorflow==2.5.1
+tensorboard==2.5
 tqdm

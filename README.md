@@ -39,13 +39,13 @@ It is advisable to do this from within a newly created virtual environment.
 The basic commandline is accessible from the repository's basedirectory by calling:
 
 ```bash
-python -m emo-net.cli --help
+python -m emonet.cli --help
 ```
 
 This prints a help message specifying the list of subcommands. For each subcommand, more help is available via:
 
 ```bash
-python -m emo-net.cli [subcommand] --help
+python -m emonet.cli [subcommand] --help
 ```
 
 ### Data Preparation
@@ -57,7 +57,7 @@ The toolkit can be used for arbitrary audio classification tasks. To prepare you
 The CLI has a nested structure, i.e., it uses two layers of subcommands. The first subcommand specifies the type of neural network architecture that is used. Here, "cnn" gives access to the ResNet architecture which also includes residual adapters, based on the training setting. Two other options, "rnn" and "fusion" are also included but untested and in early stages of development. The rest of this guide will therefore focus on the "cnn" subcommand. After specifying the model type, two distinct subcommands are accessible: "single-task" and "multi-task", which refer to the type of training procedure. For single task, training is performed on one database at a time specified by its basedirectory and the label files for train, validation and developments:
 
 ```bash
-python -m emo-net.cli -v cnn single-task -t [taskName] --data-path /path/to/task/wavs -tr train.csv -v devel.csv -te test.csv
+python -m emonet.cli -v cnn single-task -t [taskName] --data-path /path/to/task/wavs -tr train.csv -v devel.csv -te test.csv
 ```
 
 One additional parameter is needed that defines the type of training performed. Here, the choice can be made between tuning a fresh model from scratch (`-m scratch`), fully finetuning an existing model (`-m finetune`), training only the classifier head (`-m last-layer`) and the residual adapter approach (`-m adapters`). For the last three methods, a pre-trained model has to be loaded by specifying the path to its weights via `-im /path/to/weights.h5`. While all other parameters have sensible default values, the full list is given below:

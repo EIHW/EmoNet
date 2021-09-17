@@ -20,6 +20,7 @@ import tensorflow as tf
 tf.random.set_seed(42)
 
 import time
+from datetime import datetime
 from os.path import join
 from sklearn.utils import class_weight
 from .losses import *
@@ -116,7 +117,7 @@ def train_single_task(
     base_nb_classes = None
     feature_extractor_params = __feature_extractor_params_string(feature_extractor, **kwargs)
     training_params = f'balancedClassWeights-{balanced_weights}-loss-{loss}-optimizer-{optimizer.__name__}-lr-{initial_learning_rate}-bs-{batch_size}-patience-{patience}-random_noise-{random_noise}-numMels-{num_mels}-ib-{input_bn}-sfl-{share_feature_layer}-iwd-{individual_weight_decay}'
-    experiment_base_path = f"{join(experiment_base_path, 'single-task', feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params)}"
+    experiment_base_path = f"{join(experiment_base_path, 'single-task', feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))}"
     
     train_generator = AudioDataGenerator(train_csv,
                                          directory,
@@ -315,7 +316,7 @@ def train_multi_task(
         variable_duration = True
     feature_extractor_params = __feature_extractor_params_string(feature_extractor, **kwargs)
     training_params = f'balancedClassWeights-{balanced_weights}-loss-{loss}-optimizer-{optimizer.__name__}-lr-{initial_learning_rate}-bs-{batch_size}-epochs-{epochs}-spe-{steps_per_epoch}-random_noise-{random_noise}-numMels-{num_mels}-ib-{input_bn}-sfl-{share_feature_layer}-iwd-{individual_weight_decay}'
-    experiment_base_path = f"{join(experiment_base_path, 'multi-task', '-'.join(map(lambda x: x[:4], tasks)), feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params)}"
+    experiment_base_path = f"{join(experiment_base_path, 'multi-task', '-'.join(map(lambda x: x[:4], tasks)), feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))}"
     
     
     train_generators = [

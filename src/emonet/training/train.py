@@ -117,7 +117,7 @@ def train_single_task(
     base_nb_classes = None
     feature_extractor_params = __feature_extractor_params_string(feature_extractor, **kwargs)
     training_params = f'balancedClassWeights-{balanced_weights}-loss-{loss}-optimizer-{optimizer.__name__}-lr-{initial_learning_rate}-bs-{batch_size}-patience-{patience}-random_noise-{random_noise}-numMels-{num_mels}-ib-{input_bn}-sfl-{share_feature_layer}-iwd-{individual_weight_decay}'
-    experiment_base_path = f"{join(experiment_base_path, 'single-task', feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))}"
+    experiment_base_path = f"{join(experiment_base_path, 'single-task', feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params)}"
     
     train_generator = AudioDataGenerator(train_csv,
                                          directory,
@@ -180,7 +180,7 @@ def train_single_task(
         class_weight_dict = None
         logger.info('Not using class weights.')
 
-    task_base_path = join(experiment_base_path, task, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))
+    task_base_path = join(experiment_base_path, task, datetime.now().strftime('%d.%m.%Y-%H:%M:%S'))
     weights = join(task_base_path, "weights_" + task + ".h5")
 
     
@@ -316,7 +316,7 @@ def train_multi_task(
         variable_duration = True
     feature_extractor_params = __feature_extractor_params_string(feature_extractor, **kwargs)
     training_params = f'balancedClassWeights-{balanced_weights}-loss-{loss}-optimizer-{optimizer.__name__}-lr-{initial_learning_rate}-bs-{batch_size}-epochs-{epochs}-spe-{steps_per_epoch}-random_noise-{random_noise}-numMels-{num_mels}-ib-{input_bn}-sfl-{share_feature_layer}-iwd-{individual_weight_decay}'
-    experiment_base_path = f"{join(experiment_base_path, 'multi-task', '-'.join(map(lambda x: x[:4], tasks)), feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))}"
+    experiment_base_path = f"{join(experiment_base_path, 'multi-task', '-'.join(map(lambda x: x[:4], tasks)), feature_extractor, mode, f'Window-{window}s', feature_extractor_params, training_params, datetime.now().strftime('%d.%m.%Y-%H:%M:%S'))}"
     
     
     train_generators = [

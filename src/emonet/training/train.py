@@ -180,7 +180,7 @@ def train_single_task(
         class_weight_dict = None
         logger.info('Not using class weights.')
 
-    task_base_path = join(experiment_base_path, task)
+    task_base_path = join(experiment_base_path, task, datetime.now().strftime('%d/%m/%Y-%H:%M:%S'))
     weights = join(task_base_path, "weights_" + task + ".h5")
 
     

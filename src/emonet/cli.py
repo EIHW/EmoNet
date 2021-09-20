@@ -935,7 +935,7 @@ def evaluate_cnn(data_path,
               '--tasks',
               required=True,
               help='Names of the tasks that are trained.',
-              cls=OptionEatAll)
+              multiple=True)
 @click.option(
     '-bs',
     '--batch-size',
@@ -1308,8 +1308,8 @@ def single_task_vgg(data_path,
 @click.option('-t',
               '--tasks',
               required=True,
-              help='Names of the tasks that are trained.',
-              cls=OptionEatAll)
+              multiple=True,
+              help='Names of the tasks that are trained.')
 @click.option(
     '-bs',
     '--batch-size',

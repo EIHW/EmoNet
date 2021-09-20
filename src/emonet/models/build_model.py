@@ -332,7 +332,7 @@ def create_multi_task_resnets(input_dim,
     new_weight_decays = new_weight_decays if new_weight_decays is not None else [1e-6]*len(really_new_tasks)
     
     # check if batchnorm should be reused
-    if len(new_tasks) != 1:
+    if new_tasks is None or len(new_tasks) != 1:
         reuse_batchnorm = False
     elif new_tasks[0] in base_tasks and len(base_tasks) > 1:
         reuse_batchnorm = False

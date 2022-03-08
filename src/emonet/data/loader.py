@@ -62,28 +62,31 @@ class AudioDataGenerator(Sequence):
         self.variable_duration = variable_duration
         self.files = []
         self.classes = []
-        with open(csv_file) as f:
-            reader = csv.reader(f, delimiter=',')
-            header = next(reader)
-            if 'label' in header:
-                label_index = header.index('label')
-                logger.info(f'Setup csv "{csv_file}" contains "label" column at index {label_index}.')
+        if csv_file is not None:
+            with open(csv_file) as f:
+                reader = csv.reader(f, delimiter=',')
+                header = next(reader)
+                if 'label' in header:
+                    label_index = header.index('label')
+                    logger.info(f'Setup csv "{csv_file}" contains "label" column at index {label_index}.')
 
-            else:
-                label_index = len(header) - 1
-                logger.warn(f'Setup csv "{csv_file}" does not contain "label" column. Choosing last column: "{header[label_index]}" instead.')
-            if 'file' in header:
-                path_index = header.index('file')
-                logger.info(f'Setup csv "{csv_file}" contains "file" column at index {path_index}.')
+                else:
+                    label_index = len(header) - 1
+                    logger.warn(f'Setup csv "{csv_file}" does not contain "label" column. Choosing last column: "{header[label_index]}" instead.')
+                if 'file' in header:
+                    path_index = header.index('file')
+                    logger.info(f'Setup csv "{csv_file}" contains "file" column at index {path_index}.')
 
-            else:
-                path_index = 0
-                logger.warn(f'Setup csv "{csv_file}" does not contain "file" column. Choosing first column: "{header[path_index]}" instead.')
-            for line in reader:
-                self.files.append(
-                    join(directory, line[path_index]))
-                self.classes.append(line[label_index])
-
+                else:
+                    path_index = 0
+                    logger.warn(f'Setup csv "{csv_file}" does not contain "file" column. Choosing first column: "{header[path_index]}" instead.')
+                for line in reader:
+                    self.files.append(
+                        join(directory, line[path_index]))
+                    self.classes.append(line[label_index])
+        else:
+            self.files = sorted(glob(f'{directory}/**/*.wav', recursive=True))
+            self.classes = ["?"]*len(self.files)
         logger.info(f'Parsed {len(self.files)} audio files')
         self.val_split = val_split
         self.train_indices = None
